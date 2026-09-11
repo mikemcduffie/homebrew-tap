@@ -19,6 +19,8 @@ cask "qladdict" do
       "com.apple.quarantine",
       "{{user_library}}/QuickLook/QLAddict.qlgenerator",
     ]
+    run "echo", args: ["Restarting quicklook service"], print_stdout: true
+    run "qlmanage -r"
   end
 
   # No zap stanza required
