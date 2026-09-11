@@ -10,12 +10,20 @@ cask "mark-text" do
   desc "Markdown editor"
   homepage "https://github.com/marktext/marktext"
 
-  
 
   auto_updates true
   depends_on macos: :monterey
 
   app "MarkText.app"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/MarkText.app",
+    ]
+  end
 
   zap trash: [
     "~/Library/Application Support/marktext",

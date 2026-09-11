@@ -12,11 +12,19 @@ cask "dupeguru" do
     strategy :github_latest
   end
 
-  
 
   depends_on :macos
 
-  app "dupeguru.app"
+  app "dupeGuru.app"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/dupeGuru.app",
+    ]
+  end
 
   zap trash: [
     "~/Library/Application Support/dupeGuru",

@@ -15,7 +15,6 @@ cask "rar" do
     regex(/>\s*RAR\s+for\s+macOS.*?v?(\d+(:?\.\d+)+)\s*</i)
   end
 
-  
 
   depends_on :macos
 
@@ -23,6 +22,20 @@ cask "rar" do
   binary "rar/unrar"
   artifact "rar/default.sfx", target: "#{HOMEBREW_PREFIX}/lib/default.sfx"
   artifact "rar/rarfiles.lst", target: "#{HOMEBREW_PREFIX}/etc/rarfiles.lst"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "#{prefix}/bin/rar",
+    ]
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "#{prefix}/bin/unrar",
+    ]
+  end
 
   # No zap stanza required
 end

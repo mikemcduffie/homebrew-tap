@@ -12,11 +12,19 @@ cask "comictagger" do
     strategy :github_latest
   end
 
-  
 
   depends_on :macos
 
   app "ComicTagger.app"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/ComicTagger.app",
+    ]
+  end
 
   zap trash: [
     "~/.ComicTagger",

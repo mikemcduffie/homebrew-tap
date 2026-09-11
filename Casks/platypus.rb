@@ -12,12 +12,20 @@ cask "platypus" do
     strategy :sparkle, &:short_version
   end
 
-  
 
   auto_updates true
   depends_on macos: :big_sur
 
   app "Platypus.app"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/Platypus.app",
+    ]
+  end
 
   zap trash: [
     "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/org.sveinbjorn.platypus.sfl*",

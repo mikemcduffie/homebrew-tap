@@ -7,11 +7,19 @@ cask "qladdict" do
   desc "Quick Look plugin for subtitle (.srt) files"
   homepage "https://github.com/tattali/QLAddict/"
 
-  deprecate! date: "2025-09-22", because: :no_longer_meets_criteria
 
   depends_on :macos
 
   qlplugin "QLAddict.qlgenerator"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "~/Library/QuickLook/QLAddict.qlgenerator",
+    ]
+  end
 
   # No zap stanza required
 end

@@ -20,13 +20,21 @@ cask "avidemux" do
   desc "Video editor"
   homepage "https://www.avidemux.org/"
 
-  
 
   depends_on :macos
 
   app "Avidemux_#{version}.app"
   binary "#{appdir}/Avidemux_#{version}.app/Contents/MacOS/avidemux_cli", target: "avidemux"
   binary "#{appdir}/Avidemux_#{version}.app/Contents/MacOS/avidemux_jobs"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/Avidemux_#{version}.app",
+    ]
+  end
 
   zap trash: [
     "~/.avidemux6",

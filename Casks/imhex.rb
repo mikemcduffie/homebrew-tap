@@ -18,11 +18,19 @@ cask "imhex" do
   desc "Hex editor for reverse engineers"
   homepage "https://imhex.werwolv.net/"
 
-  
 
   depends_on :macos
 
   app "ImHex.app"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/ImHex.app",
+    ]
+  end
 
   zap trash: [
     "~/Library/Application Support/imhex",

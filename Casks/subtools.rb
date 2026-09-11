@@ -12,11 +12,19 @@ cask "subtools" do
     regex(/href=.*?subtools[._-]?v?(\d+(?:\.\d+)+)\.zip/i)
   end
 
-  
 
   depends_on :macos
 
   app "subtools#{version}/SUBtools.app"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/SUBtools.app",
+    ]
+  end
 
   zap trash: [
     "~/Library/Application Support/EmmGunn",

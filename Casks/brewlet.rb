@@ -12,11 +12,19 @@ cask "brewlet" do
     strategy :github_latest
   end
 
-  
 
   depends_on :macos
 
   app "Brewlet.app"
+  
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/{Brewlet.app}",
+    ]
+  end
 
   zap trash: "~/Library/Preferences/zzada.Brewlet.plist"
 end

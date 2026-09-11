@@ -12,11 +12,19 @@ cask "aegisub" do
     strategy :github_latest
   end
 
-  
 
   depends_on macos: :ventura
 
   app "Aegisub.app"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/Aegisub.app",
+    ]
+  end
 
   uninstall quit: "com.aegisub.aegisub"
 

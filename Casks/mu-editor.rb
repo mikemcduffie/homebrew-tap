@@ -8,11 +8,19 @@ cask "mu-editor" do
   desc "Small, simple editor for beginner Python programmers"
   homepage "https://codewith.mu/"
 
-  deprecate! date: "2025-08-31", because: :unmaintained
 
   depends_on :macos
 
   app "Mu Editor.app"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/Mu Editor.app",
+    ]
+  end
 
   zap trash: [
         "~/Library/Application Support/mu",

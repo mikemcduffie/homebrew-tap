@@ -12,7 +12,7 @@ cask "pycharm-ce" do
   homepage "https://www.jetbrains.com/pycharm/"
 
   # https://blog.jetbrains.com/pycharm/2025/12/pycharm-2025-3-unified-ide-jupyter-notebooks-in-remote-development-uv-as-default-and-more/
-  deprecate! date: "2025-12-08", because: :discontinued, replacement_cask: "pycharm"
+  
 
   auto_updates true
   depends_on :macos
@@ -20,6 +20,15 @@ cask "pycharm-ce" do
   app "PyCharm CE.app"
   command_wrapper "pycharm-ce",
                   executable: "#{appdir}/PyCharm CE.app/Contents/MacOS/pycharm"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/PyCharm CE.app",
+    ]
+  end
 
   zap trash: [
     "~/Library/Application Support/JetBrains/PyCharmCE#{version.major_minor}",

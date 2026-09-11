@@ -12,7 +12,6 @@ cask "makemkv" do
     regex(%r{href=.*?/makemkv[._-]v?(\d+(?:\.\d+)+)[._-]osx\.dmg}i)
   end
 
-  
 
   depends_on macos: :big_sur
 
@@ -21,6 +20,15 @@ cask "makemkv" do
   binary "#{appdir}/MakeMKV.app/Contents/MacOS/mmccextr"
   binary "#{appdir}/MakeMKV.app/Contents/MacOS/mmgplsrv"
   binary "#{appdir}/MakeMKV.app/Contents/MacOS/sdftool"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/MakeMKV.app",
+    ]
+  end
 
   zap trash: [
     "~/Library/MakeMKV",

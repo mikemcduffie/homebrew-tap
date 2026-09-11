@@ -11,7 +11,7 @@ cask "whisky" do
   # https://docs.getwhisky.app/maintenance-notice
   # As the cask is reasonably popular, disabling could be delayed beyond 12 months
   # from deprecation date, if it is still functional.
-  deprecate! date: "2025-04-09", because: :unmaintained
+  
 
   auto_updates true
   depends_on macos: :sonoma
@@ -19,6 +19,15 @@ cask "whisky" do
 
   app "Whisky.app"
   binary "#{appdir}/Whisky.app/Contents/Resources/WhiskyCmd", target: "whisky"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/Whisky.app",
+    ]
+  end
 
   zap trash: [
     "~/Library/Application Scripts/com.isaacmarovitz.Whisky.WhiskyThumbnail",

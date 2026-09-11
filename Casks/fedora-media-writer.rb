@@ -15,11 +15,19 @@ cask "fedora-media-writer" do
     strategy :github_latest
   end
 
-  
 
   depends_on :macos
 
   app "FedoraMediaWriter.app"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/FedoraMediaWriter.app",
+    ]
+  end
 
   zap trash: [
     "~/Library/Caches/fedoraproject.org",

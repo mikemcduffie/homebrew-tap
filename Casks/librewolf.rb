@@ -14,6 +14,15 @@ cask "librewolf" do
     command_wrapper "librewolf",
                     executable: "#{appdir}/LibreWolf.app/Contents/MacOS/librewolf"
 
+    postflight_steps do
+      run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+      run "/usr/bin/xattr", base: :appdir, args: [
+        "-dr",
+        "com.apple.quarantine",
+        "{{appdir}}/LibreWolf.app",
+      ]
+    end
+
     zap trash: [
       "~/.librewolf",
       "~/Library/Application Support/LibreWolf",

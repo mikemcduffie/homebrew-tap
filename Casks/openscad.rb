@@ -12,13 +12,21 @@ cask "openscad" do
     regex(/href=.*?OpenSCAD[._-]v?(\d+(?:\.\d+)+)\.dmg/i)
   end
 
-  
 
   conflicts_with cask: "openscad@snapshot"
   depends_on :macos
 
   app "OpenSCAD-#{version}.app"
   binary "#{appdir}/OpenSCAD-#{version}.app/Contents/MacOS/OpenSCAD", target: "openscad"
+
+  postflight_steps do
+    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "/usr/bin/xattr", base: :appdir, args: [
+      "-dr",
+      "com.apple.quarantine",
+      "{{appdir}}/OpenSCAD-#{version}.app",
+    ]
+  end
 
   zap trash: [
     "~/Library/Caches/org.openscad.OpenSCAD",
