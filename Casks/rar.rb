@@ -28,12 +28,12 @@ cask "rar" do
     run "/usr/bin/xattr", base: :appdir, args: [
       "-dr",
       "com.apple.quarantine",
-      "#{prefix}/bin/rar",
+      "#{HOMEBREW_PREFIX}/bin/rar",
     ]
     run "/usr/bin/xattr", base: :appdir, args: [
       "-dr",
       "com.apple.quarantine",
-      "{prefix}/bin/unrar",
+      "#{HOMEBREW_PREFIX}/bin/unrar",
     ]
   end
 
