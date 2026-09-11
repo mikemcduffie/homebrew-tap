@@ -33,7 +33,7 @@ cask "rar" do
     run "/usr/bin/xattr", base: :appdir, args: [
       "-dr",
       "com.apple.quarantine",
-      "#{prefix}/bin/unrar",
+      "{prefix}/bin/unrar",
     ]
   end
 
