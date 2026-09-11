@@ -18,7 +18,7 @@ cask "pikachuexe-freetube" do
 
   app "FreeTube.app"
 
-  postflight do
+  postflight_steps do
     ohai "Releasing #{token} from quarantine"
     system_command("/usr/bin/xattr",
                    args: [
