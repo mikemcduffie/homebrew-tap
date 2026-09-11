@@ -17,7 +17,7 @@ cask "qladdict" do
     run "/usr/bin/xattr", base: :appdir, args: [
       "-dr",
       "com.apple.quarantine",
-      "~/Library/QuickLook/QLAddict.qlgenerator",
+      "{{user_library}}/QuickLook/QLAddict.qlgenerator",
     ]
   end
 
