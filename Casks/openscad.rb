@@ -12,7 +12,7 @@ cask "openscad" do
     regex(/href=.*?OpenSCAD[._-]v?(\d+(?:\.\d+)+)\.dmg/i)
   end
 
-  disable! date: "2026-09-01", because: :fails_gatekeeper_check
+  
 
   conflicts_with cask: "openscad@snapshot"
   depends_on :macos

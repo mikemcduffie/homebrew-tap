@@ -20,7 +20,7 @@ cask "avidemux" do
   desc "Video editor"
   homepage "https://www.avidemux.org/"
 
-  disable! date: "2026-09-01", because: :fails_gatekeeper_check
+  
 
   depends_on :macos
 
