@@ -8,7 +8,6 @@ cask "qladdict" do
   homepage "https://github.com/tattali/QLAddict/"
 
 
-  depends_on :macos
   depends_on maximum_macos: :sonoma
 
   qlplugin "QLAddict.qlgenerator"
