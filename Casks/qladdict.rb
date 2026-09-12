@@ -20,7 +20,7 @@ cask "qladdict" do
       "/Users/mike/Library/QuickLook/QLAddict.qlgenerator",
     ]
     run "echo", args: ["Restarting quicklook service"], print_stdout: true
-    run "qlmanage -r"
+    run "/usr/bin/qlmanage", args: ["-r"]"
   end
 
   # No zap stanza required
