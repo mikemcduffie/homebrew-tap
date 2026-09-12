@@ -17,7 +17,7 @@ cask "qladdict" do
     run "/usr/bin/xattr", base: :appdir, args: [
       "-dr",
       "com.apple.quarantine",
-      "~/Library/QuickLook/QLAddict.qlgenerator",
+      "$HOME/Library/QuickLook/QLAddict.qlgenerator",
     ]
     run "echo", args: ["Restarting quicklook service"], print_stdout: true
     run "qlmanage -r"
