@@ -14,11 +14,10 @@ cask "qladdict" do
 
   postflight_steps do
     run "echo", args: ["Removing #{token} from quarantine"], print_stdout: true
-    run "pwd", base: :qlplugindir, print_stdout: true
     run "/usr/bin/xattr", base: :qlplugindir, sudo: true, args: [
       "-dr",
       "com.apple.quarantine",
-      "QLAddict.qlgenerator",
+      File.join(ENV["HOME"], "Library/QuickLook/QLAddict.qlgenerator"),
     ]
     run "echo", args: ["Restarting quicklook service"], print_stdout: true
     run "/usr/bin/qlmanage", args: ["-r"]
