@@ -9,6 +9,7 @@ cask "qladdict" do
 
 
   depends_on :macos
+  depends_on maximum_macos: :sonoma
 
   qlplugin "QLAddict.qlgenerator"
 
