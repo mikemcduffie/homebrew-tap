@@ -22,7 +22,7 @@ cask "makemkv" do
   binary "#{appdir}/MakeMKV.app/Contents/MacOS/sdftool"
 
   postflight_steps do
-    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "echo", args: ["Removing #{token} from quarantine"], print_stdout: true
     run "/usr/bin/xattr", base: :appdir, args: [
       "-dr",
       "com.apple.quarantine",

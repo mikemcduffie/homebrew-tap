@@ -13,7 +13,7 @@ cask "mu-editor" do
   app "Mu Editor.app"
 
   postflight_steps do
-    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "echo", args: ["Removing #{token} from quarantine"], print_stdout: true
     run "/usr/bin/xattr", base: :appdir, args: [
       "-dr",
       "com.apple.quarantine",

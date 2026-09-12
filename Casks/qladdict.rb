@@ -13,7 +13,7 @@ cask "qladdict" do
   qlplugin "QLAddict.qlgenerator"
 
   postflight_steps do
-    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "echo", args: ["Removing #{token} from quarantine"], print_stdout: true
     run "/usr/bin/xattr", base: :appdir, sudo: true, args: [
       "-dr",
       "com.apple.quarantine",

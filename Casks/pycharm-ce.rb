@@ -22,7 +22,7 @@ cask "pycharm-ce" do
                   executable: "#{appdir}/PyCharm CE.app/Contents/MacOS/pycharm"
 
   postflight_steps do
-    run "echo", args: ["Releasing #{token} from quarantine"], print_stdout: true
+    run "echo", args: ["Removing #{token} from quarantine"], print_stdout: true
     run "/usr/bin/xattr", base: :appdir, args: [
       "-dr",
       "com.apple.quarantine",
