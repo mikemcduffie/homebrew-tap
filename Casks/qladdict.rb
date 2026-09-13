@@ -7,7 +7,7 @@ cask "qladdict" do
   desc "Quick Look plugin for subtitle (.srt) files"
   homepage "https://github.com/tattali/QLAddict/"
 
-
+  # Apple completely removed support for legacy .qlgenerator plug-ins in macOS 15 (Sequoia) 
   depends_on maximum_macos: :sonoma
 
   qlplugin "QLAddict.qlgenerator"
